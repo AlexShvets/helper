@@ -1,0 +1,69 @@
+#{extends 'main.html'/}
+<h1>${organisation.fullName} - ${organisation.organisationStatusInSro}</h1>
+<h2>${organisation.lawAdress}</h2>
+<h2>Контакты: (${organisation.telephoneCod}) ${organisation.telephoneNumber}; Факс: ${organisation.fax}; Эл. Почта <a href="mailto: ${organisation.email}">${organisation.email}</a></h2>
+<table  class="simple-little-table" cellspacing='0'>
+    <tr>
+        <th>Номер Наш/Саратов</th>
+        <td>${organisation.filialNumber} / ${organisation.registrNumber}</td>
+    </tr>
+    <tr>
+        <th>Полное наименование</th>
+        <td>${organisation.fullName} </td>
+    </tr>
+    <tr>
+        <th>Сокращенное наименование</th>
+        <td>${organisation.shortName} </td>
+    </tr>
+    <tr>
+        <th>ИНН/ОГРН</th>
+        <td>${organisation.inn}/${organisation.ogrn} </td>
+    </tr>
+    <tr>
+        <th>Руководитель</th>
+        <td>${organisation.head} </td>
+    </tr>
+    <tr>
+        <th>Дата выдачи 1-го свидетельства</th>
+        <td>${new java.text.SimpleDateFormat("dd/MM/YYY").format(organisation.firstCertificateDate)} </td>
+    </tr>
+</table>
+#{if certificateList}
+<b>Свидетельства</b>
+<table  class="simple-little-table" cellspacing='0'>
+
+    <tr>
+        <th>Номер</th>
+        <th>Дата протокола</th>
+        <th>Кол-во видов</th>
+        <th>Кол-во групп</th>
+        <th>Ген. подряд</th>
+        <th>Статус</th>
+        <th>Дата отправки док-в</th>
+    </tr>
+    #{list items:certificateList, as: 'cert'}
+    <tr>
+        <td>${cert.name}</td>
+        <td>${new java.text.SimpleDateFormat("dd/MM/YYY").format(cert.protocolDate)}</td>
+        <td>${cert.countTypesOfWork}</td>
+        <td>${cert.countGroupsOfWork}</td>
+        <td>${cert.sumOfGeneralContractor}</td>
+        <td>${cert.certificateStatusInSro}</td>
+        #{if cert.dateOfDispatchDocuments}
+            <td>${new java.text.SimpleDateFormat("dd/MM/YYY").format(cert.dateOfDispatchDocuments)}</td>
+        #{/if}
+        #{else }
+            не задано
+        #{/else}
+    </tr>
+    #{/list}
+</table>
+
+#{/if}
+#{else }
+<h2>Свидетельства не выдавались</h2>
+#{/else}
+
+
+
+

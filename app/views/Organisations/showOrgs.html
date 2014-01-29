@@ -1,0 +1,116 @@
+#{extends 'main.html'/}
+
+
+
+
+
+<br />
+<table  class="simple-little-table" cellspacing='0'>
+    <tr>
+        <th><h2>Поиск</h2></th>
+    </tr><!-- Table Header -->
+
+    <tr>
+        <th><h3>По наименованию </h3></th>
+        <th><h3>По ИНН </h3></th>
+        <th><h3>По руководителю </h3></th>
+    </tr><!-- Table Header -->
+    <tr>
+        <td>
+        #{if scope == models.Scope.SMR  }
+            #{form @showSelectedOrgsSmr()}
+                <input type="text" id="name" name="name" size="30"/>
+            #{/form}
+        #{/if}
+        #{else }
+            #{form @showSelectedOrgsPr()}
+                <input type="text" id="name" name="name" size="30"/>
+            #{/form}
+        #{/else}
+        </td>
+        <td>
+        #{if scope == models.Scope.SMR  }
+            #{form @showSelectedOrgsSmr()}
+                <input type="text" id="inn" name="inn" size="30"/>
+            #{/form}
+        #{/if}
+        #{else }
+            #{form @showSelectedOrgsPr()}
+                <input type="text" id="inn" name="inn" size="30"/>
+            #{/form}
+        #{/else}
+        </td>
+        <td>
+        #{if scope == models.Scope.SMR  }
+            #{form @showSelectedOrgsSmr()}
+                <input type="text" id="head" name="head" size="30"/>
+            #{/form}
+        #{/if}
+        #{else }
+            #{form @showSelectedOrgsPr()}
+                <input type="text" id="head" name="head" size="30"/>
+            #{/form}
+        #{/else}
+        </td>
+  </tr><!-- Table Row -->
+
+
+
+</table>
+
+<script>
+    $("#name").autocomplete({
+        source: function (request, response)
+    {
+        $.ajax({
+        #{if scope == models.Scope.SMR  }
+            url: "@{Organisations.autocompleteByNameSmr()}",
+        #{/if}
+        #{else }
+            url: "@{Organisations.autocompleteByNamePr()}",
+        #{/else}
+
+            dataType: "json",
+            data: {
+                term: request.term
+            },
+            success: function (data) {
+                response($.map(data, function (item) {
+                    return{
+                        label: item.name,
+                        value: item.name
+                    }
+                }));
+            }
+        });
+    },
+        minLength :2
+
+    });
+</script>
+<table  class="simple-little-table" cellspacing='0'>
+    <tr>
+        <th>№ п/п </th>
+        <th>Наименование </th>
+        <th>ИНН</th>
+        <th>Руководитель</th>
+        <th>Дата выдачи 1-го св-ва</th>
+    </tr><!-- Table Header -->
+    #{list items:organisations, as:'org'}
+    <tr  onclick="location = '/Organisations/show?id=${org.id}'">
+        #{if org.isDissmissed()}
+            <td>${org.filialNumber}_Искл</td>
+        #{/if}
+        #{if !org.isDissmissed()}
+            <td >${org.filialNumber}</td>
+        #{/if}
+        <td>${org.name}</td>
+        <td>${org.inn}</td>
+        <td>${org.head}</td>
+        <td>${new java.text.SimpleDateFormat("dd/MM/YYY").format(org.firstCertificateDate)}</td>
+    </tr><!-- Table Row -->
+    #{/list}
+
+
+
+</table>

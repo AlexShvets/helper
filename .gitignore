@@ -1,0 +1,10 @@
+/tmp
+/modules
+/test-result
+/logs
+/templateFiles
+/resultTemplateFiles
+/excelFiles
+y.iml
+y.ipr
+y.iws
