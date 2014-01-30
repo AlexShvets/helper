@@ -13,7 +13,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class ExcelHelper {
+final public static String Empty_Data = "не задано";
+final public static String Delimetr = "///";
 
   public static HSSFSheet getExcelSheet(String fileName) {
     HSSFSheet sheet;
@@ -42,7 +45,7 @@ public class ExcelHelper {
       Cell cell = row.getCell(i);
       String temp;
       if (cell == null) {
-        temp = "не задано";
+        temp = Empty_Data;
       } else {
         if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 
@@ -60,7 +63,7 @@ public class ExcelHelper {
         temp=temp.replaceAll("   ", " ");
       }
       result.append(temp);
-      result.append("///");
+      result.append(Delimetr);
     }
   }
 
@@ -68,15 +71,15 @@ public class ExcelHelper {
     Cell cell = row.getCell(0);
     if ((cell.getCellType() == HSSFCell.CELL_TYPE_STRING) && (!cell.getStringCellValue().contains("П") ) ||(cell.getCellType()==Cell.CELL_TYPE_NUMERIC) ) {
       setStringTypeToCell(cell);
-      result.append(cell.toString()).append("///");
+      result.append(cell.toString()).append(Delimetr);
       cell = row.getCell(3);
       setStringTypeToCell(cell);
-      result.append(cell.toString()).append("///");
+      result.append(cell.toString()).append(Delimetr);
       cell = row.getCell(12);
       if (cell == null) {
-        result.append("не задано").append("///");
+        result.append(Empty_Data).append(Delimetr);
       } else {
-        result.append(cell.toString()).append("///");
+        result.append(cell.toString()).append(Delimetr);
       }
     } else {
 //      System.out.println("Формат ячейки = " +cell.getCellType() + " А тип строки = " +Cell.CELL_TYPE_STRING+ " Значение = "+ cell.toString()+" Numeric = "+Cell.CELL_TYPE_NUMERIC);
@@ -88,14 +91,14 @@ public class ExcelHelper {
     Cell cellName= row.getCell(9);
     if (cellName==null) return;
     setStringTypeToCell(cellName);
-    result.append(cellName.toString().trim()).append("///");
+    result.append(cellName.toString().trim()).append(Delimetr);
     Cell cellDate= row.getCell(8);
 
     if ((cellDate!=null)){
         setStringTypeToCell(cellDate);
-        result.append(cellDate.toString().trim()).append("///");
+        result.append(cellDate.toString().trim()).append(Delimetr);
     } else {
-      result.append(DateTime.now().toDate().toString().trim()).append("///");
+      result.append(DateTime.now().toDate().toString().trim()).append(Delimetr);
     }
 
   }
@@ -189,23 +192,23 @@ public class ExcelHelper {
       setStringTypeToCell(cell);
       result.append(cell.toString().trim());
     } else {
-      result.append("не задано");
+      result.append(Empty_Data);
     }
-    result.append("///");
+    result.append(Delimetr);
   }
 
   private static void addValueOrString(StringBuilder result, Cell cell) {
     if (cell!=null){
       result.append(cell.toString().trim());
     }else {
-      result.append("не задано");
+      result.append(Empty_Data);
     }
-    result.append("///");
+    result.append(Delimetr);
   }
 
   private static void addValue(StringBuilder result, Cell cell) {
     result.append(cell.toString().trim());
-    result.append("///");
+    result.append(Delimetr);
   }
 
 }

@@ -10,4 +10,9 @@ public class FileUtils {
    return Files.exists (Paths.get(fileName));
   }
 
+  public static boolean collectionOfBaselineData(){
+
+    return true;
+  }
+
 }

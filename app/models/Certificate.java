@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import play.db.jpa.GenericModel;
+import utils.ExcelHelper;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -91,7 +92,7 @@ public class Certificate extends GenericModel {
     this.statusofLoad = statusofLoad;
     this.sumOfGeneralContractor = sumOfGeneralContractor;
 
-    if (protocolDate.contains("не задано")){
+    if (protocolDate.contains(ExcelHelper.Empty_Data)){
       this.protocolDate = null;
 
     }else {
@@ -105,7 +106,7 @@ public class Certificate extends GenericModel {
       String reestrNumber = tempName[4].trim();
       Organisation organisation = Organisation.find("inn = ? and scope = ? and statusofload = ?", inn, scope, objectStatusofLoad.INBASE.ordinal()).first();
       if (organisation!=null){
-        if (organisation.registrNumber.contains("Не задан")){
+        if (organisation.registrNumber.contains(Organisation.EMPTYSTRING)){
           organisation.registrNumber = reestrNumber;
           organisation.save();
         } else {

@@ -25,4 +25,13 @@ public class Setting extends GenericModel{
   @Column
   public Scope scope;
 
+  @Column
+  public SettingType settingType;
+
+  public Setting(String name, Scope scope, SettingType settingType, String value) {
+    this.name = name;
+    this.scope = scope;
+    this.settingType = settingType;
+    this.value = value;
+  }
 }

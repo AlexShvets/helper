@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import play.db.jpa.GenericModel;
+import utils.ExcelHelper;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import java.util.List;
 @SequenceGenerator(name = "organisation_sequence", sequenceName = "organisation_sequence")
 public class Organisation extends GenericModel{
 
+  public static final String EMPTYSTRING = "Не задан";
   @Id
   @GeneratedValue(generator = "organisation_sequence")
   int id;
@@ -86,7 +88,7 @@ public class Organisation extends GenericModel{
   public OrganisationStatusInSro organisationStatusInSro;
 
   @Column(nullable = true)
-  public String registrNumber = "Не задан";
+  public String registrNumber = EMPTYSTRING;
 
   @Override
   public String toString() {
@@ -114,7 +116,7 @@ public class Organisation extends GenericModel{
     this.email = email;
     this.factAdress = factAdress;
     this.fax = fax;
-    if (firstCertificateDate.contains("не задано")){
+    if (firstCertificateDate.contains(ExcelHelper.Empty_Data)){
       this.firstCertificateDate = null;
 
     }else {

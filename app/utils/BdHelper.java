@@ -3,6 +3,8 @@ package utils;
 import models.Organisation;
 import models.OrganisationStatusInSro;
 import models.Scope;
+import models.Setting;
+import models.SettingType;
 import play.db.jpa.JPA;
 
 
@@ -60,6 +62,16 @@ public class BdHelper {
   }
 
   public static void fillBd() {
+
+    Setting settingMEx = new Setting("Реест МОС Эксель", Scope.SMR, SettingType.FILES_EXCEL_REESTR, "/home/user/srohelper/srohelper/excelFiles/РЕЕСТР_МОС.xls" ).save();
+    Setting settingPEx = new Setting("Реест МОП Эксель", Scope.PR, SettingType.FILES_EXCEL_REESTR, "/home/user/srohelper/srohelper/excelFiles/РЕЕСТР_МОП.xls" ).save();
+    Setting settingM1C = new Setting("Реестр МОС 1с", Scope.SMR, SettingType.FILES_ORGANISATION_1C, "/home/user/srohelper/srohelper/excelFiles/МОС_К .xls" ).save();
+    Setting settingP1C = new Setting("Реестр МОП 1с", Scope.PR, SettingType.FILES_ORGANISATION_1C, "/home/user/srohelper/srohelper/excelFiles/МОП_К .xls" ).save();
+
+    Setting settingM1CS = new Setting("Реестр МОС 1с свид-ва", Scope.SMR, SettingType.FILES_CERTIFICATE_1C, "/home/user/srohelper/srohelper/excelFiles/МОС_С.xls").save();
+    Setting settingP1CS = new Setting("Реестр МОП 1с свид-ва", Scope.PR, SettingType.FILES_CERTIFICATE_1C, "/home/user/srohelper/srohelper/excelFiles/МОП_С.xls").save();
+
+
     LoadData.loadOrganisationsFrom1C(Scope.SMR, "/home/user/srohelper/srohelper/excelFiles/МОС_К .xls");
     LoadData.loadOrganisationsFromExcel(Scope.SMR,  "/home/user/srohelper/srohelper/excelFiles/РЕЕСТР_МОС.xls");
     LoadData.loadOrganisationsFrom1C(Scope.PR, "/home/user/srohelper/srohelper/excelFiles/МОП_К .xls");

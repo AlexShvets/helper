@@ -1,12 +1,6 @@
 package models;
 
-/**
- * Created with IntelliJ IDEA.
- * User: user
- * Date: 1/14/14
- * Time: 4:30 PM
- * To change this template use FileUtils | Settings | FileUtils Templates.
- */
+
 public enum certificateStatusInSro {
   NEW("На коммиссию"),
   CONFIRM("Подтвержден"),

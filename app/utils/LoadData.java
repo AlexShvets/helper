@@ -17,13 +17,6 @@ import static utils.ExcelHelper.readAllFileFromSheetCert;
 import static utils.ExcelHelper.readAllFileFromSheetCertExel;
 import static utils.ExcelHelper.readAllFileFromSheetExcel;
 
-/**
- * Created with IntelliJ IDEA.
- * User: user
- * Date: 1/15/14
- * Time: 2:29 PM
- * To change this template use File | Settings | File Templates.
- */
 public class LoadData {
 
   public static boolean loadOrganisationsFrom1C(Scope scope, String fileNameFrom1C){
@@ -39,11 +32,11 @@ public class LoadData {
     Organisation.deleteOnLoadStatusOrg(objectStatusofLoad.LOADED, scope);
     System.out.println("Начинаем загрузку организации для сферы "+scope);
     for (String organisationData: organisations){
-      getDataForOrganisationFrom1C(scope, organisationData.split("///"));
+      getDataForOrganisationFrom1C(scope, organisationData.split(ExcelHelper.Delimetr));
     }
-//    for(String s:organisations.get(5).split("///"))
+//    for(String s:organisations.get(5).split(ExcelHelper.Delimetr))
 //      System.out.println(s);
-//    getDataForOrganisationFrom1C(scope, organisations.get(5).split("///"));
+//    getDataForOrganisationFrom1C(scope, organisations.get(5).split(ExcelHelper.Delimetr));
     return true;
   }
 
@@ -93,7 +86,7 @@ public class LoadData {
 //      System.out.println(organisationData);
     }
     for (String organisationData : organisations) {
-      String[] orgDataToInsert = organisationData.split("///");
+      String[] orgDataToInsert = organisationData.split(ExcelHelper.Delimetr);
       Organisation org = Organisation.find("inn = ? and scope = ? and statusofload = ?", orgDataToInsert[1].trim(), scope, objectStatusofLoad.INBASE.ordinal()).first();
       if (org != null) {
         org.filialNumber = Integer.parseInt(orgDataToInsert[0].trim());
@@ -130,7 +123,7 @@ public class LoadData {
     certs.remove(0);
     certs.remove(certs.size() - 1);
     for (String certData: certs){
-      getCertDataFrom1C(scope, certData.split("///"));
+      getCertDataFrom1C(scope, certData.split(ExcelHelper.Delimetr));
     }
     return true;
   }
@@ -177,7 +170,7 @@ public class LoadData {
 //      System.out.println(certsData);
     }
     for (String certData : certs) {
-      String[] certDataToInsert = certData.split("///");
+      String[] certDataToInsert = certData.split(ExcelHelper.Delimetr);
       Certificate cert = Certificate.find("name = ? and statusofload = ?", certDataToInsert[0].trim(), objectStatusofLoad.INBASE.ordinal()).first();
       if ((cert != null) && (certDataToInsert.length==2))  {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("dd.MM.YYYY");
