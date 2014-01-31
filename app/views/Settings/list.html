@@ -1,0 +1,41 @@
+#{extends 'main.html'/}
+
+
+
+
+
+<br />
+#{if settingList}
+<table  class="simple-little-table" cellspacing='0'>
+    <tr>
+        <th><h2>Поиск</h2></th>
+    </tr><!-- Table Header -->
+
+    <tr>
+        <th><h3>Наименование</h3></th>
+        <th><h3>Сфера</h3></th>
+        <th><h3>Тип</h3></th>
+        <th><h3>Значение</h3></th>
+    </tr><!-- Table Header -->
+    #{list items:settingList, as :'setting'}
+    <tr onclick="location = '/Settings/show?id=${setting.id}'">
+        <td>
+        ${setting.name}
+        </td>
+        <td>
+        ${setting.scope}
+        </td>
+        <td>
+        ${setting.settingType}
+        </td>
+        <td>
+        ${setting.value}
+        </td>
+    </tr><!-- Table Row -->
+    #{/list}
+</table>
+#{/if}
+
+#{else}
+Нет ни одной настройки
+#{/else}

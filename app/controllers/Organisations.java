@@ -6,26 +6,23 @@ import models.Scope;
 import models.certificateStatusInSro;
 import play.mvc.Controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.TimeZone;
 
 
 public class Organisations extends Controller {
 
   public static void showOrgsSmr(){
-    showOrgs(Scope.SMR);
+    list(Scope.SMR);
 
   }
 
-  private static void showOrgs(Scope scope) {
+  private static void list(Scope scope) {
     List<Organisation> organisations= Organisation.getOrgListByScope(scope);
-    renderTemplate("Organisations/showOrgs.html", organisations, scope);
+    renderTemplate("Organisations/list.html", organisations, scope);
   }
 
   public static void showPr(){
-    showOrgs(Scope.PR);
+    list(Scope.PR);
 
   }
 
@@ -37,25 +34,21 @@ public class Organisations extends Controller {
   }
 
   public static void showSelectedOrgsSmr(String name, String inn, String head) {
-    List<Organisation> organisations = null;
-    organisations = getOrganisations(name, inn, head, organisations, Scope.SMR);
-    if (organisations.size()>0){
-        Scope scope = organisations.get(0).scope;
-        renderTemplate("Organisations/showOrgs.html", organisations, scope);
-      }
-
-    renderTemplate("Organisations/showOrgs.html", organisations);
+    showSelectedOrgs(name, inn, head, Scope.SMR);
   }
 
   public static void showSelectedOrgsPr(String name, String inn, String head) {
+    showSelectedOrgs(name, inn, head, Scope.PR);
+  }
+
+  private static void showSelectedOrgs(String name, String inn, String head, Scope scope) {
     List<Organisation> organisations = null;
-    organisations = getOrganisations(name, inn, head, organisations, Scope.PR);
+    organisations = getOrganisations(name, inn, head, organisations, scope);
     if (organisations.size()>0){
-      Scope scope = organisations.get(0).scope;
-      renderTemplate("Organisations/showOrgs.html", organisations, scope);
+      renderTemplate("Organisations/list.html", organisations,scope);
     }
 
-    renderTemplate("Organisations/showOrgs.html", organisations);
+    renderTemplate("Organisations/list.html", organisations);
   }
 
   private static List<Organisation> getOrganisations(String name, String inn, String head, List<Organisation> organisations, Scope scope) {
