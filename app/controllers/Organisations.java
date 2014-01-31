@@ -3,9 +3,15 @@ package controllers;
 import models.Certificate;
 import models.Organisation;
 import models.Scope;
+import models.Setting;
+import models.SettingType;
 import models.certificateStatusInSro;
+import play.Play;
 import play.mvc.Controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 
@@ -74,6 +80,21 @@ public class Organisations extends Controller {
   public static void autocompleteByNamePr(final String term) {
     final List<String> response = Organisation.find("upper(fullname) like upper(?) and scope = ?", "%"+term+"%", Scope.PR).fetch();
     renderJSON(response);
+  }
+
+  public static void update(){
+    List<Setting> settingList = Setting.find("settingtype = ?", SettingType.FILES_ORGANISATION_1C).fetch();
+    for (Setting setting:settingList){
+      try {
+        Files.copy(Paths.get(setting.value), Paths.get(Play.applicationPath.getPath()) );
+      } catch (IOException e) {
+        System.out.println("файлы не скопированы");
+      }
+    }
+  }
+
+  public static void updateExcel(){
+
   }
 
 }

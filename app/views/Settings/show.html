@@ -17,8 +17,18 @@
         <th>Значение</th>
         <td>${setting.value} </td>
     </tr>
+    <tr>
+        <th>Новое значение</th>
+        <td>#{form @changeValue()}
+            <input type="text" id="newValue" name="newValue" />
+            <input type="hidden"  name="id" value="${setting.id}"/>
+
+            <input type="submit" value="Изменить" />
+        #{/} </td>
+    </tr>
 
 </table>
+
 
 
 
